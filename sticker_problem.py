@@ -17,7 +17,7 @@ import re
 import unittest
 
 
-#Takes 2 numbers of type int, divides them, and then adds the remainder back into the number so 7/2 instead of of 3 would equal 4. 
+#Takes 2 numbers of type int, divides them, and then adds the remainder back into the number. ex: 7/2 instead of of 3 would equal 4. 
 def divide_and_round_up(num1, num2): 
     result = int(num1 / num2) + (num1 % num2 > 0)
     return result
@@ -30,7 +30,7 @@ def lowercase_without_spaces(input):
     return result
 
 
-#This function will build a dictionary with each unique letters. ex 'facebook' = {'f': 1, 'a': 1, 'c': 1, 'e': 1, 'b': 1, 'o': 2, 'k': 1}
+#This function will build a dictionary with each unique letters. ex: 'facebook' = {'f': 1, 'a': 1, 'c': 1, 'e': 1, 'b': 1, 'o': 2, 'k': 1}
 def build_letter_hash(input):
     clean_sticker = lowercase_without_spaces(input)
     sticker_hash = {}    #creating empty dictionary
@@ -73,7 +73,7 @@ def main():
 
 
 '''
-# using a test class found from other person's github with some extra tests
+# used a test class found from other person's github answer. At first I had thought we did these really differently since he was using the math function but upon closer inspection we did about the same thing with the dictionaries. 
 class Test(unittest.TestCase):
     def testExample(self):
         self.assertEquals(3, get_num_stickers("coffee kebab"))
@@ -83,124 +83,21 @@ class Test(unittest.TestCase):
         self.assertEquals(3, get_num_stickers("facefacebookface"))
         self.assertEquals(2, get_num_stickers("faceboook"))
 
+        self.assertEquals(3, get_num_stickers("coffee kebab"))
+        self.assertEquals(1, get_num_stickers("book"))
+        self.assertEquals(2, get_num_stickers("ffacebook"))
+
         self.assertEquals(3, get_num_stickers("facebook facebook facebook"))
         self.assertEquals(4, get_num_stickers("facebook facebook facebook o"))
         self.assertEquals(6, get_num_stickers("foo oo oo oo facebook o"))
         self.assertEquals(4, get_num_stickers("FF Ace  oooo EeeAAa"))
         self.assertEquals(1, get_num_stickers("e"))
         self.assertEquals(0, get_num_stickers(""))
-        self.assertEquals(100, get_num_stickers(one_hundred))
 
 
 if __name__ == "__main__":
     unittest.main()
 '''
-
-
-one_hundred = '''
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-facebook
-'''
-
-input = one_hundred
 
 if __name__ == "__main__":
     main()
