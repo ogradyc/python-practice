@@ -13,15 +13,21 @@
 STICKER = "facebook"
 #input = "facebook"
 #input = "facebook facebook"
-input = "facebook facebook facebook"
+#input = "facebook facebook facebook"
+#input = "facebook facebook facebook o"
 
-#input = "foo oo oo oo facebook o"
+input = "foo oo oo oo facebook o"
 
 #lowercase_space_test = "FF Ace  oooo EeeAAa"
 
 
 
 import re
+
+#Found a more elegant round up solution rather than importing math that still incorporates the muldo https://stackoverflow.com/questions/2356501/how-do-you-round-up-a-number
+def round_up(num1, num2): 
+    result = int(num1 / num2) + (num1 % num2 > 0)
+    return result
 
 
 #This function will make sure an input is a string, strip out spaces and ensure it is all lowercase. This will prevent false duplicates
@@ -58,8 +64,10 @@ def get_num_stickers(input):
         sticker_hash = build_letter_hash(lowercase_without_spaces(STICKER))
         clean_input = lowercase_without_spaces(input)
         input_hash = build_letter_hash(clean_input)
-        for i in clean_input:
-            letter_difference = sticker_hash[i] % input_hash[i]
+        for i in STICKER:
+            print('input is ' + str(input_hash[i]))
+            print('sticker is ' + str(sticker_hash[i]))
+            letter_difference = round_up(input_hash[i], sticker_hash[i])
             print(i + ' --> ' + str(letter_difference))
             if letter_difference > how_many_stickers:
                 how_many_stickers = letter_difference
