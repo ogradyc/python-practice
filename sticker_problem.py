@@ -17,23 +17,25 @@ input = "ffacebook"
 import re
 
 
-#This function will make sure an input is a string, strip out spaces and ensure it is all lowercase. This will prevent false duplicates
 def lowercase_without_spaces(input):
     result = re.sub(r"\s+", "", input, flags=re.UNICODE)
     result = result.lower()
     return result
 
 
-#This function will build a dictionary with each unique letters. ex {f=1, a=1, c=1, e=1, b=1, o=2, k=1}
+#This function will build a dictionary with each unique letters. ex {'a': 1, 'c': 1, 'b': 1, 'e': 1, 'f': 2, 'k': 1, 'o': 2}
 def build_letter_hash(input):
     clean_sticker = lowercase_without_spaces(input)
     sticker_hash = {}    #creating empty dictionary
+    number_of_letters = 0
     for i in clean_sticker:
         key_letter = i
-        number_of_letters = sticker_hash[i] + 1
-        sticker_hash[number_of_letters] = key_letter
+        if sticker_hash.get(i) is not None:
+            number_of_letters = sticker_hash.get(i) + 1
+        else:
+            number_of_letters = 1
+        sticker_hash[key_letter] = number_of_letters
     result = sticker_hash
-    print(result)
     return result
 
 
