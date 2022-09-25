@@ -1,4 +1,3 @@
-
 # Facebook logo stickers cost $2 each from the company store. I have an idea.
 #I want to cut up the stickers, and use the letters to make other words/phrases
 # A Facebook logo sticker contains only the word "facebook", in all lower case letters.
@@ -12,11 +11,20 @@
 # you can assume the input you are passed is valid, that is, does not contain # of any non-"facebook" letters, and the only potential non-letter characters # in the string are spaces. 
 
 STICKER = "facebook"
-input = "ffacebook"
+#input = "facebook"
+#input = "facebook facebook"
+input = "facebook facebook facebook"
+
+#input = "foo oo oo oo facebook o"
+
+#lowercase_space_test = "FF Ace  oooo EeeAAa"
+
+
 
 import re
 
 
+#This function will make sure an input is a string, strip out spaces and ensure it is all lowercase. This will prevent false duplicates
 def lowercase_without_spaces(input):
     result = re.sub(r"\s+", "", input, flags=re.UNICODE)
     result = result.lower()
@@ -46,16 +54,24 @@ def get_num_stickers(input):
         result = how_many_stickers
         return result
     else:
-        sticker_hash = build_letter_hash(STICKER)
-        clean_input = lowercasewithoutspaces(input)
+        how_many_stickers = 1
+        sticker_hash = build_letter_hash(lowercase_without_spaces(STICKER))
+        clean_input = lowercase_without_spaces(input)
         input_hash = build_letter_hash(clean_input)
-        for i in len(clean_input):
-            letter_difference = sticker_hash[clean_input[i]] % input_hash[clean_input[i]] 
+        for i in clean_input:
+            letter_difference = sticker_hash[i] % input_hash[i]
+            print(i + ' --> ' + str(letter_difference))
             if letter_difference > how_many_stickers:
                 how_many_stickers = letter_difference
         result = how_many_stickers
-        print(result)
         return result
 
-#add Main function here to run this
-get_num_stickers(input)
+
+def main():
+    result = get_num_stickers(input)
+    print('The Number of Stickers you will need to buy is: ' + str(result))
+    return result
+
+
+if __name__ == "__main__":
+    main()
