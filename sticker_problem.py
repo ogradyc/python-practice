@@ -11,21 +11,14 @@
 # you can assume the input you are passed is valid, that is, does not contain # of any non-"facebook" letters, and the only potential non-letter characters # in the string are spaces. 
 
 STICKER = "facebook"
-#input = "facebook"
-#input = "facebook facebook"
-#input = "facebook facebook facebook"
-#input = "facebook facebook facebook o"
-
-input = "foo oo oo oo facebook o"
-
-#lowercase_space_test = "FF Ace  oooo EeeAAa"
-
 
 
 import re
+import unittest
 
-#Found a more elegant round up solution rather than importing math that still incorporates the muldo https://stackoverflow.com/questions/2356501/how-do-you-round-up-a-number
-def round_up(num1, num2): 
+
+#Takes 2 numbers of type int, divides them, and then adds the remainder back into the number so 7/2 instead of of 3 would equal 4. 
+def divide_and_round_up(num1, num2): 
     result = int(num1 / num2) + (num1 % num2 > 0)
     return result
 
@@ -37,7 +30,7 @@ def lowercase_without_spaces(input):
     return result
 
 
-#This function will build a dictionary with each unique letters. ex {'a': 1, 'c': 1, 'b': 1, 'e': 1, 'f': 2, 'k': 1, 'o': 2}
+#This function will build a dictionary with each unique letters. ex 'facebook' = {'f': 1, 'a': 1, 'c': 1, 'e': 1, 'b': 1, 'o': 2, 'k': 1}
 def build_letter_hash(input):
     clean_sticker = lowercase_without_spaces(input)
     sticker_hash = {}    #creating empty dictionary
@@ -65,12 +58,10 @@ def get_num_stickers(input):
         clean_input = lowercase_without_spaces(input)
         input_hash = build_letter_hash(clean_input)
         for i in STICKER:
-            print('input is ' + str(input_hash[i]))
-            print('sticker is ' + str(sticker_hash[i]))
-            letter_difference = round_up(input_hash[i], sticker_hash[i])
-            print(i + ' --> ' + str(letter_difference))
-            if letter_difference > how_many_stickers:
-                how_many_stickers = letter_difference
+            if input_hash.get(i) is not None:
+                letter_difference = divide_and_round_up(input_hash[i], sticker_hash[i])
+                if letter_difference > how_many_stickers:
+                    how_many_stickers = letter_difference
         result = how_many_stickers
         return result
 
@@ -80,6 +71,136 @@ def main():
     print('The Number of Stickers you will need to buy is: ' + str(result))
     return result
 
+
+'''
+# using a test class found from other person's github with some extra tests
+class Test(unittest.TestCase):
+    def testExample(self):
+        self.assertEquals(3, get_num_stickers("coffee kebab"))
+        self.assertEquals(1, get_num_stickers("facebook"))
+        self.assertEquals(2, get_num_stickers("facebook facebook"))
+        self.assertEquals(1, get_num_stickers("face book"))
+        self.assertEquals(3, get_num_stickers("facefacebookface"))
+        self.assertEquals(2, get_num_stickers("faceboook"))
+
+        self.assertEquals(3, get_num_stickers("facebook facebook facebook"))
+        self.assertEquals(4, get_num_stickers("facebook facebook facebook o"))
+        self.assertEquals(6, get_num_stickers("foo oo oo oo facebook o"))
+        self.assertEquals(4, get_num_stickers("FF Ace  oooo EeeAAa"))
+        self.assertEquals(1, get_num_stickers("e"))
+        self.assertEquals(0, get_num_stickers(""))
+        self.assertEquals(100, get_num_stickers(one_hundred))
+
+
+if __name__ == "__main__":
+    unittest.main()
+'''
+
+
+one_hundred = '''
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+facebook
+'''
+
+input = one_hundred
 
 if __name__ == "__main__":
     main()
