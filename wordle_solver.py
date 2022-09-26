@@ -5,18 +5,20 @@
 import re
 
 
-pattern = re.compile('\w\w\wit', re.IGNORECASE)
-includes = 'ad'
-excludes = 'ohspquelvg'
-
+pattern = re.compile('\w\wis\w', re.IGNORECASE)
+includes = ''
+excludes = 'whatzom'
+TOTAL = 0
 
 
 # Runs through a short string to see if letters are present in a word
 def letter_search(letter_string, word):
-	result = False
+	result = True
+	if letter_string is not '':
+		result = False
 	for letter in letter_string:
 		var = re.compile(letter, re.IGNORECASE)
-		if find_options(letter_string, word):
+		if find_options(var, word):
 			result = True
 	return result
 
@@ -31,7 +33,10 @@ def find_all_fives(pattern):
 				if result is True:
 					result = letter_search(excludes, word)
 					if result is False:
+						global TOTAL
+						TOTAL = TOTAL + 1
 						print(word)
+
 
 
 
@@ -44,6 +49,7 @@ def find_options(pattern, word):
 
 def main():
 	find_all_fives(pattern)
+	print('Total Word Options: ' + str(TOTAL))
 
 if __name__ == "__main__":
     main()
