@@ -11,9 +11,8 @@
 # you can assume the input you are passed is valid, that is, does not contain # of any non-"facebook" letters, and the only potential non-letter characters # in the string are spaces. 
 
 STICKER = "facebook"
+#input = 'f facebook'
 
-
-import re
 import unittest
 
 
@@ -24,15 +23,15 @@ def divide_and_round_up(num1, num2):
 
 
 #This function will make sure an input is a string, strip out spaces and ensure it is all lowercase. This will prevent false duplicates
-def lowercase_without_spaces(input):
-    result = re.sub(r"\s+", "", input, flags=re.UNICODE)
+def lowercase_without_spaces(string):
+    result = string.replace(' ', '')
     result = result.lower()
     return result
 
 
 #This function will build a dictionary with each unique letters. ex: 'facebook' = {'f': 1, 'a': 1, 'c': 1, 'e': 1, 'b': 1, 'o': 2, 'k': 1}
-def build_letter_hash(input):
-    clean_sticker = lowercase_without_spaces(input)
+def build_letter_hash(string):
+    clean_sticker = lowercase_without_spaces(string)
     sticker_hash = {}    #creating empty dictionary
     number_of_letters = 0
     for i in clean_sticker:
@@ -47,19 +46,19 @@ def build_letter_hash(input):
 
 
 #This function will run over the input and show how many stickers to buy
-def get_num_stickers(input):
+def get_num_stickers(string):
     how_many_stickers = 0
-    if input == "":
+    if string == "":
         result = how_many_stickers
         return result
     else:
         how_many_stickers = 1
         sticker_hash = build_letter_hash(lowercase_without_spaces(STICKER))
-        clean_input = lowercase_without_spaces(input)
-        input_hash = build_letter_hash(clean_input)
+        clean_string = lowercase_without_spaces(string)
+        string_hash = build_letter_hash(clean_string)
         for i in STICKER:
-            if input_hash.get(i) is not None:
-                letter_difference = divide_and_round_up(input_hash[i], sticker_hash[i])
+            if string_hash.get(i) is not None:
+                letter_difference = divide_and_round_up(string_hash[i], sticker_hash[i])
                 if letter_difference > how_many_stickers:
                     how_many_stickers = letter_difference
         result = how_many_stickers
@@ -67,37 +66,35 @@ def get_num_stickers(input):
 
 
 def main():
-    result = get_num_stickers(input)
+    result = get_num_stickers(string)
     print('The Number of Stickers you will need to buy is: ' + str(result))
     return result
 
 
-'''
+
 # used a test class found from other person's github answer. At first I had thought we did these really differently since he was using the math function but upon closer inspection we did about the same thing with the dictionaries. 
 class Test(unittest.TestCase):
     def testExample(self):
-        self.assertEquals(3, get_num_stickers("coffee kebab"))
-        self.assertEquals(1, get_num_stickers("facebook"))
-        self.assertEquals(2, get_num_stickers("facebook facebook"))
-        self.assertEquals(1, get_num_stickers("face book"))
-        self.assertEquals(3, get_num_stickers("facefacebookface"))
-        self.assertEquals(2, get_num_stickers("faceboook"))
-
-        self.assertEquals(3, get_num_stickers("coffee kebab"))
-        self.assertEquals(1, get_num_stickers("book"))
-        self.assertEquals(2, get_num_stickers("ffacebook"))
-
-        self.assertEquals(3, get_num_stickers("facebook facebook facebook"))
-        self.assertEquals(4, get_num_stickers("facebook facebook facebook o"))
-        self.assertEquals(6, get_num_stickers("foo oo oo oo facebook o"))
-        self.assertEquals(4, get_num_stickers("FF Ace  oooo EeeAAa"))
-        self.assertEquals(1, get_num_stickers("e"))
-        self.assertEquals(0, get_num_stickers(""))
-
-
+        self.assertEqual(3, get_num_stickers("coffee kebab"))
+        self.assertEqual(1, get_num_stickers("facebook"))
+        self.assertEqual(2, get_num_stickers("facebook facebook"))
+        self.assertEqual(1, get_num_stickers("face book"))
+        self.assertEqual(3, get_num_stickers("facefacebookface"))
+        self.assertEqual(2, get_num_stickers("faceboook"))
+        self.assertEqual(3, get_num_stickers("coffee kebab"))
+        self.assertEqual(1, get_num_stickers("book"))
+        self.assertEqual(2, get_num_stickers("ffacebook"))
+        self.assertEqual(3, get_num_stickers("facebook facebook facebook"))
+        self.assertEqual(4, get_num_stickers("facebook facebook facebook o"))
+        self.assertEqual(6, get_num_stickers("foo oo oo oo facebook o"))
+        self.assertEqual(4, get_num_stickers("FF Ace  oooo EeeAAa"))
+        self.assertEqual(1, get_num_stickers("e"))
+        self.assertEqual(0, get_num_stickers(""))
 if __name__ == "__main__":
     unittest.main()
+    
 '''
 
 if __name__ == "__main__":
     main()
+'''
