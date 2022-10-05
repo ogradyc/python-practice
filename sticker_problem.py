@@ -11,58 +11,54 @@
 # you can assume the input you are passed is valid, that is, does not contain # of any non-"facebook" letters, and the only potential non-letter characters # in the string are spaces. 
 
 STICKER = "facebook"
-#input = 'f facebook'
 
 import unittest
 
 
-#Takes 2 numbers of type int, divides them, and then adds the remainder back into the number. ex: 7/2 instead of of 3 would equal 4. 
-def divide_and_round_up(num1, num2): 
-    result = int(num1 / num2) + (num1 % num2 > 0)
-    return result
+# Facebook logo stickers cost $2 each from the company store. I have an idea.
+#I want to cut up the stickers, and use the letters to make other words/phrases
+# A Facebook logo sticker contains only the word "facebook", in all lower case letters.
+#
+# write a function that, given a string consisting of a word or words made up of # of letters from the word "facebook", outputs an integer with the number of # stickers I will need to buy.
+#
+# get_num_stickers("coffee kebab") -> 3
+# get_num_stickers("book") -> 1
+# get_num_stickers("ffacebook") ->2
+#
+# you can assume the input you are passed is valid, that is, does not contain # of any non-"facebook" letters, and the only potential non-letter characters # in the string are spaces. 
+
+sticker = "facebook"
+#string = "facebook facebook facebook o"
 
 
-#This function will make sure an input is a string, strip out spaces and ensure it is all lowercase. This will prevent false duplicates
-def lowercase_without_spaces(string):
-    result = string.replace(' ', '')
-    result = result.lower()
-    return result
+def create_dict(string):
+  letter_dict = {}
+  if string != '':
+    for i in string:
+      if i in letter_dict:
+        letter_dict[i] = letter_dict[i] + 1
+      else:
+        letter_dict[i] = 1
+  return letter_dict
 
-
-#This function will build a dictionary with each unique letters. ex: 'facebook' = {'f': 1, 'a': 1, 'c': 1, 'e': 1, 'b': 1, 'o': 2, 'k': 1}
-def build_letter_hash(string):
-    clean_sticker = lowercase_without_spaces(string)
-    sticker_hash = {}    #creating empty dictionary
-    number_of_letters = 0
-    for i in clean_sticker:
-        key_letter = i
-        if sticker_hash.get(i) is not None:
-            number_of_letters = sticker_hash.get(i) + 1
-        else:
-            number_of_letters = 1
-        sticker_hash[key_letter] = number_of_letters
-    result = sticker_hash
-    return result
-
-
-#This function will run over the input and show how many stickers to buy
 def get_num_stickers(string):
-    how_many_stickers = 0
-    if string == "":
-        result = how_many_stickers
-        return result
-    else:
-        how_many_stickers = 1
-        sticker_hash = build_letter_hash(lowercase_without_spaces(STICKER))
-        clean_string = lowercase_without_spaces(string)
-        string_hash = build_letter_hash(clean_string)
-        for i in STICKER:
-            if string_hash.get(i) is not None:
-                letter_difference = divide_and_round_up(string_hash[i], sticker_hash[i])
-                if letter_difference > how_many_stickers:
-                    how_many_stickers = letter_difference
-        result = how_many_stickers
-        return result
+  max_stickers = 0
+  if string != '':
+    sticker_hash = create_dict(sticker)
+    string_hash = create_dict(string)
+    s = 1
+    f = 1
+    for i in sticker_hash:
+      if i in string_hash:
+        s = string_hash[i]
+      if i in sticker_hash:
+        f = sticker_hash[i]
+      stickers_needed = int(s/f) + (s%f)
+      if max_stickers < stickers_needed:
+        max_stickers = stickers_needed
+  result = max_stickers
+  print(result)
+  return result
 
 
 def main():
